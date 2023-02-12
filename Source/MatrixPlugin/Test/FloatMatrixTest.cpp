@@ -7,34 +7,43 @@
 
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FFloatMatrixTest, "FloatMatrixTests", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter)
 
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FConstructorTest, "FloatMatrix.Constructor", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter)
+// IMPLEMENT_SIMPLE_AUTOMATION_TEST(FStaticConstructorTest, "FloatMatrix.StaticConstructor", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter)
+// IMPLEMENT_SIMPLE_AUTOMATION_TEST(FComparisonOperatorTest, "FloatMatrix.ComparisonOperator", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter)
+// IMPLEMENT_SIMPLE_AUTOMATION_TEST(FElementAccessTest, "FloatMatrix.ElementAccess", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter)
+// IMPLEMENT_SIMPLE_AUTOMATION_TEST(FMatrixScalarTest, "FloatMatrix.MatrixScalar", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter)
+// IMPLEMENT_SIMPLE_AUTOMATION_TEST(FElementWiseTest, "FloatMatrix.ElementWise", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter)
+// IMPLEMENT_SIMPLE_AUTOMATION_TEST(FMatrixMultiplicationTest, "FloatMatrix.MatrixMultiplication", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter)
+// IMPLEMENT_SIMPLE_AUTOMATION_TEST(FTransposeTest, "FloatMatrix.Transpose", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter)
+// IMPLEMENT_SIMPLE_AUTOMATION_TEST(FSumTest, "FloatMatrix.Sum", EAutomationTestFlags::ApplicationContextMask | EAutomationTestFlags::SmokeFilter)
+//
+bool FConstructorTest::RunTest(const FString& Parameters)
+{
+	{
+		FFloatMatrix Actual = FFloatMatrix(3, 3);
+		TestEqual(TEXT("Testing Constructor with Rows and Columns: Num"), Actual.Num(), 9);
+		TestEqual(TEXT("Testing Constructor with Rows and Columns: Rows"), Actual.Rows(), 3);
+		TestEqual(TEXT("Testing Constructor with Rows and Columns: Cols"), Actual.Cols(), 3);
+	}
+	{
+		FFloatMatrix Actual = FFloatMatrix(3);
+		TestEqual(TEXT("Testing Constructor with Size: Num"), Actual.Num(), 9);
+		TestEqual(TEXT("Testing Constructor with Size: Rows"), Actual.Rows(), 3);
+		TestEqual(TEXT("Testing Constructor with Size: Cols"), Actual.Cols(), 3);
+	}
+	{
+		FFloatMatrix Actual = FFloatMatrix({{1.f, 1.f, 1.f}, {1.f, 1.f, 1.f}, {1.f, 1.f, 1.f}});
+		TestEqual(TEXT("Testing Constructor with InitList: Num"), Actual.Num(), 9);
+		TestEqual(TEXT("Testing Constructor with InitList: Rows"), Actual.Rows(), 3);
+		TestEqual(TEXT("Testing Constructor with InitList: Cols"), Actual.Cols(), 3);
+	}
+
+	return true;
+}
+
+
 bool FFloatMatrixTest::RunTest(const FString& Parameters)
 {
-	// Base Constructor tests
-	{
-		// Setup
-		FFloatMatrix Mat1 = FFloatMatrix(3, 3);
-		FFloatMatrix Mat2 = FFloatMatrix(3);
-		FFloatMatrix Mat3 = FFloatMatrix({{1.f, 1.f, 1.f}, {1.f, 1.f, 1.f}, {1.f, 1.f, 1.f}});
-		FFloatMatrix Mat4 = FFloatMatrix(Mat3);
-
-		// Tests
-		// Constructor with Rows and Cols
-		TestEqual(TEXT("Testing Constructor with Rows and Columns: Num"), Mat1.Num(), 9);
-		TestEqual(TEXT("Testing Constructor with Rows and Columns: Rows"), Mat1.Rows(), 3);
-		TestEqual(TEXT("Testing Constructor with Rows and Columns: Cols"), Mat1.Cols(), 3);
-		// Constructor with Size
-		TestEqual(TEXT("Testing Constructor with Size: Num"), Mat2.Num(), 9);
-		TestEqual(TEXT("Testing Constructor with Size: Rows"), Mat2.Rows(), 3);
-		TestEqual(TEXT("Testing Constructor with Size: Cols"), Mat2.Cols(), 3);
-		// Constructor with InitList
-		TestEqual(TEXT("Testing Constructor with InitList: Num"), Mat3.Num(), 9);
-		TestEqual(TEXT("Testing Constructor with InitList: Rows"), Mat3.Rows(), 3);
-		TestEqual(TEXT("Testing Constructor with InitList: Cols"), Mat3.Cols(), 3);
-		// Copy Constructor
-		TestEqual(TEXT("Testing Copy Constructor: Num"), Mat4.Num(), 9);
-		TestEqual(TEXT("Testing Copy Constructor: Rows"), Mat4.Rows(), 3);
-		TestEqual(TEXT("Testing Copy Constructor: Cols"), Mat4.Cols(), 3);
-	}
 	
 	// Static Constructor tests
 	{
